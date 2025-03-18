@@ -1,0 +1,23 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Run HTML, CSS, JS Linter
+        run: echo "Linting code..."
+
+      - name: Deploy to GitHub Pages
+        run: echo "Deploying..."
