@@ -29,7 +29,7 @@ jobs:
         run: htmlhint ./**/*.html  # Lint all HTML files
 
       - name: Lint CSS files
-        run: csslint ./path/to/css/**/*.css  # Adjust the path to your CSS files
+        run: csslint ./*.css  # Adjust the path to your CSS files
 
       - name: Lint JavaScript files
         run: jshint ./**/*.js  # Lint all JS files
