@@ -214,16 +214,17 @@
     .task-tracker {
       padding: 20px;
     }
-    
+  
     h1 {
       font-size: 1.8rem;
     }
-    
+  
     .task-input {
       flex-direction: column;
     }
-    
+  
     #addTask {
       padding: 10px;
     }
   }
+  
