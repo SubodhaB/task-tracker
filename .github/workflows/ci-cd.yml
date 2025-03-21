@@ -16,20 +16,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up HTML, CSS, and JS Linting
+      - name: Set up Node.js (for linting)
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Use Node.js 16 or the version you prefer
+
+      - name: Install Linter Dependencies
         run: |
-          sudo apt-get install -y htmlhint
-          sudo apt-get install -y csslint
-          sudo apt-get install -y jshint
+          npm install -g htmlhint csslint jshint  # Install HTML, CSS, and JS linters
 
       - name: Lint HTML files
-        run: htmlhint ./**/*.html
+        run: htmlhint ./**/*.html  # Lint all HTML files
 
       - name: Lint CSS files
-        run: csslint ./**/*.css
+        run: csslint ./**/*.css  # Lint all CSS files
 
       - name: Lint JavaScript files
-        run: jshint ./**/*.js
+        run: jshint ./**/*.js  # Lint all JS files
 
   # Job for deployment to GitHub Pages
   deploy:
@@ -40,7 +43,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build the Application (Optional)
-        run: echo "No build required for this static project"  # You can skip this if no build step is required
+        run: echo "No build required for this static project"  # No build step needed
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
