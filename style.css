@@ -164,8 +164,8 @@ h1 i {
 
 .task-text {
   flex: 1;
+  overflow-wrap: break-word; /* Changed from word-break: break-word */
   transition: all 0.3s;
-  word-break: break-word;
 }
 
 .completed .task-text {
@@ -174,8 +174,8 @@ h1 i {
 }
 
 .completed {
-  background-color: #e5f4e9; /* Fallback solid color */
-  background-color: rgba(131, 207, 155, 0.2); /* RGBA color after fallback */
+  background-color: #e5f4e9;
+  background-color: rgba(131, 207, 155, 0.2);
   border-left: 4px solid #83cf9b;
 }
 
