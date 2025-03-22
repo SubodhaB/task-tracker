@@ -128,12 +128,12 @@ h1 i {
   color: white;
 }
 
-#taskList {
+.task-list {
   list-style-type: none;
   margin-top: 20px;
 }
 
-#taskList li {
+.task-list li {
   align-items: center;
   animation: slideIn 0.3s ease-out;
   background-color: var(--background-color);
@@ -157,7 +157,7 @@ h1 i {
   }
 }
 
-#taskList li:hover {
+.task-list li:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-3px);
 }
