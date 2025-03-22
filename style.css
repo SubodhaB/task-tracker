@@ -1,5 +1,6 @@
 /* Modern gradient background with smooth transitions */
 :root {
+<<<<<<< HEAD
     --primary-color: #4776E6;
     --secondary-color: #8E54E9;
     --background-color: #f8f9fa;
@@ -149,71 +150,223 @@
   
   @keyframes slideIn {
     from {
+=======
+  --primary-color: #4776E6;
+  --secondary-color: #8E54E9;
+  --background-color: #f8f9fa;
+  --completed-color: 131, 207, 155; /* RGB format for proper handling */
+  --delete-color: 255, 107, 107;
+  --text-color: #2d3436;
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.task-tracker {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-tracker::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+h1 {
+  color: var(--text-color);
+  margin-bottom: 24px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+h1 i {
+  color: var(--primary-color);
+  margin-right: 10px;
+}
+
+.task-input {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+#taskInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#taskInput:focus {
+  border-color: var(--primary-color);
+}
+
+/* Replaced #addTask with .add-task */
+.add-task {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.task-filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.filter {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.filter:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.filter.active {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-color: transparent;
+}
+
+#taskList {
+  list-style-type: none;
+  margin-top: 20px;
+}
+
+#taskList li {
+  background-color: var(--background-color);
+  padding: 16px 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+>>>>>>> 2afd52c (Fixed CSS errors and improved styling)
       transform: translateY(20px);
       opacity: 0;
-    }
-    to {
+  }
+  to {
       transform: translateY(0);
       opacity: 1;
-    }
   }
-  
-  #taskList li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .task-text {
-    flex: 1;
-    word-break: break-word;
-    transition: all 0.3s;
-  }
-  
-  .completed .task-text {
-    text-decoration: line-through;
-    color: #888;
-  }
-  
-  .completed {
-    background-color: rgba(131, 207, 155, 0.2);
-    border-left: 4px solid var(--completed-color);
-  }
-  
-  .task-actions {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .toggle-btn, .delete-btn {
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .toggle-btn {
-    background-color: var(--completed-color);
-    color: white;
-  }
-  
-  .delete-btn {
-    background-color: var(--delete-color);
-    color: white;
-  }
-  
-  .toggle-btn:hover, .delete-btn:hover {
-    transform: scale(1.1);
-  }
-  
-  /* Responsive design */
-  @media (max-width: 600px) {
-    .task-tracker {
+}
+
+#taskList li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.task-text {
+  flex: 1;
+  word-break: break-word;
+  transition: all 0.3s;
+}
+
+.completed .task-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.completed {
+  background-color: rgba(var(--completed-color), 0.2);
+  border-left: 4px solid rgb(var(--completed-color));
+}
+
+.task-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.toggle-btn, .delete-btn {
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.toggle-btn {
+  background-color: rgb(var(--completed-color));
+  color: white;
+}
+
+.delete-btn {
+  background-color: rgb(var(--delete-color));
+  color: white;
+}
+
+.toggle-btn:hover, .delete-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .task-tracker {
       padding: 20px;
+<<<<<<< HEAD
     }
   
    
@@ -227,3 +380,15 @@
     }
   }
   
+=======
+  }
+
+  .task-input {
+      flex-direction: column;
+  }
+
+  .add-task {
+      padding: 10px;
+  }
+}
+>>>>>>> 2afd52c (Fixed CSS errors and improved styling)
