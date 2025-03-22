@@ -28,7 +28,7 @@ body {
 
 .task-tracker {
   background-color: white;
-  border-radius: var(--border-radius);
+  border-radius: 12px; /* Fixed value instead of using variable */
   box-shadow: var(--card-shadow);
   max-width: 600px;
   overflow: hidden;
@@ -68,7 +68,7 @@ h1 i {
 
 #taskInput {
   border: 2px solid #e0e0e0;
-  border-radius: var(--border-radius);
+  border-radius: 12px; /* Fixed value instead of using variable */
   flex: 1;
   font-size: 1rem;
   outline: none;
@@ -84,7 +84,7 @@ h1 i {
   align-items: center;
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 12px; /* Fixed value instead of using variable */
   color: white;
   cursor: pointer;
   display: flex;
@@ -137,7 +137,7 @@ h1 i {
   align-items: center;
   animation: slideIn 0.3s ease-out;
   background-color: var(--background-color);
-  border-radius: var(--border-radius);
+  border-radius: 12px; /* Fixed value instead of using variable */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
