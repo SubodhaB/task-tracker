@@ -63,7 +63,6 @@ h1 i {
 .task-input {
   display: flex;
   margin-bottom: 20px;
-  margin-right: 10px;
 }
 
 #taskInput {
@@ -164,7 +163,7 @@ h1 i {
 
 .task-text {
   flex: 1;
-  overflow-wrap: break-word; /* Changed from word-break: break-word */
+  overflow-wrap: break-word;
   transition: all 0.3s;
 }
 
@@ -174,7 +173,6 @@ h1 i {
 }
 
 .completed {
-  background-color: #e5f4e9;
   background-color: rgba(131, 207, 155, 0.2);
   border-left: 4px solid #83cf9b;
 }
