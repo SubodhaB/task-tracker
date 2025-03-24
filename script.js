@@ -1,91 +1,64 @@
-// script.js
-document.addEventListener("DOMContentLoaded", () => {
-    const taskInput = document.getElementById("taskInput");
-    const addTaskButton = document.getElementById("addTask");
-    const taskList = document.getElementById("taskList");
-    const filterButtons = document.querySelectorAll(".filter");
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    
-    function saveTasks() {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-    
-    function renderTasks(filter = "all") {
-      taskList.innerHTML = "";
-      
-      tasks.forEach((task, index) => {
-        if (filter === "completed" && !task.completed) return;
-        if (filter === "pending" && task.completed) return;
-        
-        const li = document.createElement("li");
-        
-        const taskText = document.createElement("span");
-        taskText.textContent = task.text;
-        taskText.classList.add("task-text");
-        
-        li.classList.toggle("completed", task.completed);
-        
-        const actionsDiv = document.createElement("div");
-        actionsDiv.classList.add("task-actions");
-        
-        const toggleBtn = document.createElement("button");
-        toggleBtn.innerHTML = task.completed ? '<i class="fas fa-undo"></i>' : '<i class="fas fa-check"></i>';
-        toggleBtn.classList.add("toggle-btn");
-        toggleBtn.onclick = (e) => {
-          e.stopPropagation();
-          task.completed = !task.completed;
-          saveTasks();
-          renderTasks(filter);
-        };
-        
-        const deleteBtn = document.createElement("button");
-        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.onclick = (e) => {
-          e.stopPropagation();
-          tasks.splice(index, 1);
-          saveTasks();
-          renderTasks(filter);
-        };
-        
-        actionsDiv.appendChild(toggleBtn);
-        actionsDiv.appendChild(deleteBtn);
-        
-        li.appendChild(taskText);
-        li.appendChild(actionsDiv);
-        taskList.appendChild(li);
+document.addEventListener("DOMContentLoaded", function () {
+  const taskInput = document.getElementById("taskInput");
+  const addTaskButton = document.getElementById("addTask");
+  const taskList = document.getElementById("taskList");
+  const filterButtons = document.querySelectorAll(".filter");
+
+  function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === "") return;
+
+      const listItem = document.createElement("li");
+      listItem.setAttribute("data-status", "pending");
+
+      const taskSpan = document.createElement("span");
+      taskSpan.textContent = taskText;
+
+      const toggleButton = document.createElement("button");
+      toggleButton.innerHTML = '<i class="fas fa-check"></i>';
+      toggleButton.classList.add("toggle-btn");
+      toggleButton.addEventListener("click", function () {
+          listItem.classList.toggle("completed");
+          listItem.setAttribute("data-status", listItem.classList.contains("completed") ? "completed" : "pending");
+          applyFilter();
       });
-    }
-    
-    addTaskButton.addEventListener("click", () => {
-      const text = taskInput.value.trim();
-      if (text) {
-        tasks.push({ text, completed: false });
-        saveTasks();
-        renderTasks();
-        taskInput.value = "";
-      }
-    });
-    
-    taskInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        const text = taskInput.value.trim();
-        if (text) {
-          tasks.push({ text, completed: false });
-          saveTasks();
-          renderTasks();
-          taskInput.value = "";
-        }
-      }
-    });
-    
-    filterButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        filterButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-        renderTasks(button.dataset.filter);
+
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+      deleteButton.classList.add("delete-btn");
+      deleteButton.addEventListener("click", function () {
+          listItem.remove();
       });
-    });
-    
-    renderTasks();
+
+      listItem.appendChild(taskSpan);
+      listItem.appendChild(toggleButton);
+      listItem.appendChild(deleteButton);
+
+      taskList.appendChild(listItem);
+      taskInput.value = "";
+  }
+
+  addTaskButton.addEventListener("click", addTask);
+  taskInput.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") addTask();
   });
+
+  filterButtons.forEach(button => {
+      button.addEventListener("click", function () {
+          document.querySelector(".filter.active").classList.remove("active");
+          button.classList.add("active");
+          applyFilter();
+      });
+  });
+
+  function applyFilter() {
+      const activeFilter = document.querySelector(".filter.active").dataset.filter;
+      document.querySelectorAll("#taskList li").forEach(task => {
+          if (activeFilter === "all" || task.getAttribute("data-status") === activeFilter) {
+              task.style.display = "flex";
+          } else {
+              task.style.display = "none";
+          }
+      });
+  }
+});

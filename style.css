@@ -1,4 +1,4 @@
-/* Modern gradient background with smooth transitions */
+/* Define CSS Variables */
 :root {
   --primary-color: #4776E6;
   --secondary-color: #8E54E9;
@@ -10,220 +10,143 @@
   --border-radius: 12px;
 }
 
+/* Global Reset */
 * {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  align-items: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
+  align-items: center;
+  height: 100vh;
 }
 
+/* Task Tracker Container */
 .task-tracker {
-  background-color: white;
-  border-radius: 12px; /* Fixed value instead of using variable */
+  background: #fff;
+  border-radius: var(--border-radius);
   box-shadow: var(--card-shadow);
-  max-width: 600px;
-  overflow: hidden;
+  color: var(--text-color);
+  max-width: 400px;
   padding: 30px;
-  position: relative;
+  text-align: center;
   width: 100%;
 }
 
-.task-tracker::before {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  content: '';
-  height: 6px;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
 h1 {
-  color: var(--text-color);
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 24px;
-  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-h1 i {
-  color: var(--primary-color);
-  margin-right: 10px;
-}
-
+/* Task Input */
 .task-input {
   display: flex;
-  margin-bottom: 20px;
-  margin-right: 10px;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-#taskInput {
-  border: 2px solid #e0e0e0;
-  border-radius: 12px; /* Fixed value instead of using variable */
-  flex: 1;
-  font-size: 1rem;
-  outline: none;
-  padding: 12px 16px;
-  transition: border-color 0.3s;
+.task-input input {
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
 }
 
-#taskInput:focus {
+.task-input input:focus {
   border-color: var(--primary-color);
+  outline: none;
 }
 
-.add-task {
-  align-items: center;
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+.task-input button {
+  background-color: var(--primary-color);
   border: none;
-  border-radius: 12px; /* Fixed value instead of using variable */
+  border-radius: var(--border-radius);
   color: white;
   cursor: pointer;
-  display: flex;
-  font-weight: 600;
-  margin-left: 10px;
-  padding: 12px 24px;
-  transition: all 0.3s;
+  font-size: 16px;
+  padding: 10px;
 }
 
-.add-task:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+.task-input button:hover {
+  background-color: var(--secondary-color);
 }
 
+/* Task Filters */
 .task-filters {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
-.filter {
-  background-color: transparent;
-  border: 2px solid #e0e0e0;
-  border-radius: 20px;
-  color: var(--text-color);
+.task-filters .filter {
+  border: none;
   cursor: pointer;
-  font-weight: 500;
-  margin-right: 10px;
-  padding: 8px 16px;
-  transition: all 0.3s;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
 }
 
-.filter:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.filter.active {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  border-color: transparent;
+.task-filters .filter.active {
+  background-color: var(--primary-color);
   color: white;
 }
 
-.task-list {
-  list-style-type: none;
-  margin-top: 20px;
+/* Task List */
+#taskList {
+  list-style: none;
+  padding: 0;
 }
 
-.task-list li {
+#taskList li {
   align-items: center;
-  animation: slideIn 0.3s ease-out;
-  background-color: var(--background-color);
-  border-radius: 12px; /* Fixed value instead of using variable */
+  background-color: white;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
-  padding: 16px 20px;
-  transition: all 0.3s;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.task-list li:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-3px);
-}
-
-.task-text {
-  flex: 1;
-  overflow-wrap: break-word; /* Changed from word-break: break-word */
-  transition: all 0.3s;
-}
-
-.completed .task-text {
-  color: #888;
+/* Completed Task */
+.completed {
+  background-color: var(--completed-color);
+  color: white;
   text-decoration: line-through;
 }
 
-.completed {
-  background-color: #e5f4e9; /* Fallback background-color */
-  background-color: rgba(131, 207, 155, 0.2); /* RGBA background-color */
-  border-left: 4px solid #83cf9b;
-}
-
-.task-actions {
-  display: flex;
-  margin-left: 8px;
-}
-
-.delete-btn, .toggle-btn {
-  align-items: center;
+/* Buttons */
+.toggle-btn,
+.delete-btn {
   border: none;
-  border-radius: 50%;
   cursor: pointer;
-  display: flex;
-  height: 36px;
-  justify-content: center;
-  transition: all 0.3s;
-  width: 36px;
+  font-size: 14px;
+  padding: 5px 10px;
 }
 
 .toggle-btn {
-  background-color: #83cf9b;
+  background-color: var(--completed-color);
+  border-radius: var(--border-radius);
   color: white;
+}
+
+.toggle-btn:hover {
+  background-color: #6dbf7c;
 }
 
 .delete-btn {
-  background-color: #ff6b6b;
+  background-color: var(--delete-color);
+  border-radius: var(--border-radius);
   color: white;
-  margin-left: 8px;
 }
 
-.delete-btn:hover, .toggle-btn:hover {
-  transform: scale(1.1);
-}
-
-/* Responsive design */
-@media (max-width: 600px) {
-  .task-tracker {
-    padding: 20px;
-  }
-
-  .task-input {
-    flex-direction: column;
-  }
-
-  .add-task {
-    margin-left: 0;
-    margin-top: 10px;
-    padding: 10px;
-  }
+.delete-btn:hover {
+  background-color: #e63d3d;
 }
