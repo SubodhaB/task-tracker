@@ -1,64 +1,92 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const taskInput = document.getElementById("taskInput");
-  const addTaskButton = document.getElementById("addTask");
-  const taskList = document.getElementById("taskList");
-  const filterButtons = document.querySelectorAll(".filter");
+    const taskInput = document.getElementById("taskInput");
+    const addTaskBtn = document.getElementById("addTask");
+    const taskList = document.getElementById("taskList");
+    const filterButtons = document.querySelectorAll(".filter");
 
-  function addTask() {
-      const taskText = taskInput.value.trim();
-      if (taskText === "") return;
+    addTaskBtn.addEventListener("click", addTask);
+    taskList.addEventListener("click", handleTaskClick);
+    filterButtons.forEach(btn => btn.addEventListener("click", filterTasks));
 
-      const listItem = document.createElement("li");
-      listItem.setAttribute("data-status", "pending");
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        if (taskText === "") return;
 
-      const taskSpan = document.createElement("span");
-      taskSpan.textContent = taskText;
+        const taskItem = document.createElement("li");
+        taskItem.classList.add("task");
+        taskItem.innerHTML = `
+            <span>${taskText}</span>
+            <div>
+                <button class="toggle-btn">✔</button>
+                <button class="delete-btn">✖</button>
+            </div>
+        `;
 
-      const toggleButton = document.createElement("button");
-      toggleButton.innerHTML = '<i class="fas fa-check"></i>';
-      toggleButton.classList.add("toggle-btn");
-      toggleButton.addEventListener("click", function () {
-          listItem.classList.toggle("completed");
-          listItem.setAttribute("data-status", listItem.classList.contains("completed") ? "completed" : "pending");
-          applyFilter();
-      });
+        taskList.appendChild(taskItem);
+        taskInput.value = "";
+        saveTasks();
+    }
 
-      const deleteButton = document.createElement("button");
-      deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-      deleteButton.classList.add("delete-btn");
-      deleteButton.addEventListener("click", function () {
-          listItem.remove();
-      });
+    function handleTaskClick(event) {
+        const taskItem = event.target.closest("li");
+        if (!taskItem) return;
 
-      listItem.appendChild(taskSpan);
-      listItem.appendChild(toggleButton);
-      listItem.appendChild(deleteButton);
+        if (event.target.classList.contains("toggle-btn")) {
+            taskItem.classList.toggle("completed");
+        } else if (event.target.classList.contains("delete-btn")) {
+            taskItem.remove();
+        }
+        saveTasks();
+    }
 
-      taskList.appendChild(listItem);
-      taskInput.value = "";
-  }
+    function filterTasks(event) {
+        const filter = event.target.dataset.filter;
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        event.target.classList.add("active");
 
-  addTaskButton.addEventListener("click", addTask);
-  taskInput.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") addTask();
-  });
+        document.querySelectorAll(".task").forEach(task => {
+            switch (filter) {
+                case "all":
+                    task.style.display = "flex";
+                    break;
+                case "pending":
+                    task.style.display = task.classList.contains("completed") ? "none" : "flex";
+                    break;
+                case "completed":
+                    task.style.display = task.classList.contains("completed") ? "flex" : "none";
+                    break;
+            }
+        });
+    }
 
-  filterButtons.forEach(button => {
-      button.addEventListener("click", function () {
-          document.querySelector(".filter.active").classList.remove("active");
-          button.classList.add("active");
-          applyFilter();
-      });
-  });
+    function saveTasks() {
+        const tasks = [];
+        document.querySelectorAll(".task").forEach(task => {
+            tasks.push({
+                text: task.querySelector("span").textContent,
+                completed: task.classList.contains("completed"),
+            });
+        });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
 
-  function applyFilter() {
-      const activeFilter = document.querySelector(".filter.active").dataset.filter;
-      document.querySelectorAll("#taskList li").forEach(task => {
-          if (activeFilter === "all" || task.getAttribute("data-status") === activeFilter) {
-              task.style.display = "flex";
-          } else {
-              task.style.display = "none";
-          }
-      });
-  }
+    function loadTasks() {
+        const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        savedTasks.forEach(task => {
+            const taskItem = document.createElement("li");
+            taskItem.classList.add("task");
+            if (task.completed) taskItem.classList.add("completed");
+
+            taskItem.innerHTML = `
+                <span>${task.text}</span>
+                <div>
+                    <button class="toggle-btn">✔</button>
+                    <button class="delete-btn">✖</button>
+                </div>
+            `;
+            taskList.appendChild(taskItem);
+        });
+    }
+
+    loadTasks();
 });

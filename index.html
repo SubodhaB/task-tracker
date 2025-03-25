@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Task Tracker</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<div class="task-tracker">
-  <h1><i class="fas fa-tasks"></i> Task Tracker</h1>
-  <div class="task-input">
-    <input type="text" id="taskInput" placeholder="Enter a task">
-    <button id="addTask"><i class="fas fa-plus"></i> Add Task</button>
-  </div>
-  <div class="task-filters">
-    <button class="filter active" data-filter="all">All</button>
-    <button class="filter" data-filter="pending">Pending</button>
-    <button class="filter" data-filter="completed">Completed</button>
-  </div>
-  <ul id="taskList"></ul>
-</div>
-<script src="script.js"></script>
+    <div class="task-tracker">
+        <h1><i class="fas fa-tasks"></i> Task Tracker</h1>
+        <div class="task-input">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <button id="addTask"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+        <div class="task-filters">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="pending">Pending</button>
+            <button class="filter" data-filter="completed">Completed</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
