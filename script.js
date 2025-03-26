@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const addTaskBtn = document.getElementById("addTask");
     const taskList = document.getElementById("taskList");
     const filterButtons = document.querySelectorAll(".filter");
+    const backupBtn = document.getElementById("backupTasks");
+    const restoreBtn = document.getElementById("restoreTasks");
 
     addTaskBtn.addEventListener("click", () => {
         console.log("✅ Add Task Button Clicked");
@@ -23,14 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     );
 
-    // Function to sanitize user input and prevent XSS attacks
+    backupBtn.addEventListener("click", backupTasks);
+    restoreBtn.addEventListener("click", restoreTasks);
+
     function sanitizeInput(input) {
         let div = document.createElement("div");
         div.innerText = input;
         return div.innerHTML;
     }
 
-    // Encrypt and store data in localStorage
     function saveToLocalStorage(key, data) {
         try {
             let encryptedData = btoa(JSON.stringify(data)); // Base64 encoding
@@ -40,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Retrieve and decrypt data from localStorage
     function getFromLocalStorage(key) {
         try {
             let data = localStorage.getItem(key);
@@ -146,13 +148,46 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(`📊 Task Stats - Total: ${totalTasks}, Completed: ${completedTasks}, Pending: ${pendingTasks}`);
     }
 
-    // Capture JavaScript errors globally
+    function backupTasks() {
+        const tasks = getFromLocalStorage("tasks");
+        const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "task-backup.json";
+        a.click();
+        console.log("💾 Backup Created");
+    }
+
+    function restoreTasks() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+        input.addEventListener("change", function () {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                try {
+                    const tasks = JSON.parse(event.target.result);
+                    saveToLocalStorage("tasks", tasks);
+                    taskList.innerHTML = "";
+                    loadTasks();
+                    console.log("🔄 Backup Restored Successfully");
+                } catch (error) {
+                    console.error("⚠️ Error Restoring Backup:", error);
+                }
+            };
+            reader.readAsText(file);
+        });
+        input.click();
+    }
+
     window.onerror = function (message, source, lineno, colno, error) {
         console.error("🚨 JavaScript Error:", { message, source, lineno, colno, error });
         alert("Oops! Something went wrong. Check the console.");
     };
 
-    // Monitor page load time
     window.addEventListener("load", function () {
         const loadTime = performance.now();
         console.log(`🚀 Page Loaded in ${loadTime.toFixed(2)}ms`);
