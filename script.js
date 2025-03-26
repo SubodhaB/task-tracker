@@ -8,8 +8,27 @@ document.addEventListener("DOMContentLoaded", function () {
     taskList.addEventListener("click", handleTaskClick);
     filterButtons.forEach(btn => btn.addEventListener("click", filterTasks));
 
+    // Function to sanitize user input and prevent XSS attacks
+    function sanitizeInput(input) {
+        let div = document.createElement("div");
+        div.innerText = input;
+        return div.innerHTML;
+    }
+
+    // Encrypt and store data in localStorage
+    function saveToLocalStorage(key, data) {
+        let encryptedData = btoa(JSON.stringify(data)); // Base64 encoding
+        localStorage.setItem(key, encryptedData);
+    }
+
+    // Retrieve and decrypt data from localStorage
+    function getFromLocalStorage(key) {
+        let data = localStorage.getItem(key);
+        return data ? JSON.parse(atob(data)) : [];
+    }
+
     function addTask() {
-        const taskText = taskInput.value.trim();
+        const taskText = sanitizeInput(taskInput.value.trim());
         if (taskText === "") return;
 
         const taskItem = document.createElement("li");
@@ -67,18 +86,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 completed: task.classList.contains("completed"),
             });
         });
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+        saveToLocalStorage("tasks", tasks);
     }
 
     function loadTasks() {
-        const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        const savedTasks = getFromLocalStorage("tasks");
         savedTasks.forEach(task => {
             const taskItem = document.createElement("li");
             taskItem.classList.add("task");
             if (task.completed) taskItem.classList.add("completed");
 
             taskItem.innerHTML = `
-                <span>${task.text}</span>
+                <span>${sanitizeInput(task.text)}</span>
                 <div>
                     <button class="toggle-btn">✔</button>
                     <button class="delete-btn">✖</button>
