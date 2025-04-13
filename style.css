@@ -93,6 +93,23 @@ body {
   color: gray;
 }
 
+.pdf-controls {
+  margin-top: 20px;
+}
+
+.pdf-controls button {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  margin: 0 10px;
+  background: #81e690;
+  cursor: pointer;
+}
+
+.pdf-controls button:hover {
+  background: #ddd;
+}
+
 .backup-controls {
   margin-top: 20px;
 }
