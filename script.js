@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const backupBtn = document.getElementById("backupTasks");
   const restoreBtn = document.getElementById("restoreTasks");
   const notificationsToggle = document.getElementById("notificationsToggle");
+  const pdfBtn = document.getElementById("generatePDF");
 
   let tasks = [];
 
@@ -124,6 +125,35 @@ document.addEventListener("DOMContentLoaded", () => {
     input.click();
   });
 
+  // Generate PDF Report
+  pdfBtn?.addEventListener("click", () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const date = new Date().toLocaleString();
+
+    doc.setFontSize(18);
+    doc.text("📋 Task Tracker Report", 10, 15);
+
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${date}`, 10, 25);
+
+    let y = 35;
+    tasks.forEach((task, i) => {
+      const status = task.completed ? "✅ Completed" : "⏳ Pending";
+      const due = task.dueDate ? new Date(task.dueDate).toLocaleString() : "No due date";
+      doc.text(`${i + 1}. ${task.text}`, 10, y);
+      doc.text(`   • Priority: ${task.priority} | Due: ${due} | Status: ${status}`, 10, y + 6);
+      y += 15;
+
+      if (y > 280) {
+        doc.addPage();
+        y = 20;
+      }
+    });
+
+    doc.save("Task_Tracker_Report.pdf");
+  });
+
   // Restore notification toggle state
   const storedToggle = localStorage.getItem("notificationsEnabled");
   if (storedToggle === "true") notificationsToggle.checked = true;
@@ -138,19 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // === Notifications Feature ===
-
-// Ask for browser permission
 if ("Notification" in window && Notification.permission !== "granted") {
   Notification.requestPermission();
 }
 
-// Schedule notification for one task
 function scheduleNotifications(task) {
   if (!task.dueDate) return;
 
   const dueTime = new Date(task.dueDate).getTime();
   const currentTime = new Date().getTime();
-  const notifyTime = dueTime - 5 * 60 * 1000; // 5 minutes before
+  const notifyTime = dueTime - 5 * 60 * 1000;
 
   if (notifyTime > currentTime) {
     const delay = notifyTime - currentTime;
@@ -165,7 +192,6 @@ function scheduleNotifications(task) {
   }
 }
 
-// Schedule notifications for all upcoming tasks
 function scheduleAllNotifications() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const notificationsToggle = document.getElementById("notificationsToggle");

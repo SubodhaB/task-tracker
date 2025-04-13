@@ -45,13 +45,20 @@
 
     <ul id="taskList"></ul>
 
-    <h1>&nbsp;</h1>
+    <h3>&nbsp;</h3>
+
+    <div class="pdf-controls">
+        <button id="generatePDF"><i class="fas fa-file-pdf"></i> Generate PDF Report</button>
+    </div>
+
     <div class="backup-controls">
       <button id="backupTasks"><i class="fas fa-download"></i> Backup Tasks</button>
       <button id="restoreTasks"><i class="fas fa-upload"></i> Restore Tasks</button>
     </div>
   </div>
 
+  <!-- jsPDF library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
