@@ -1,44 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Tracker</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="task-tracker">
-        <h1><i class="fas fa-tasks"></i> Task Tracker</h1>
-        <h4>Analyze Your Day</h4>
-        <h1>(¬_¬ )<br>&nbsp</h1>
+  <div class="task-tracker">
+    <h1><i class="fas fa-tasks"></i> Task Tracker</h1>
+    <h4>Analyze Your Day</h4>
+    <h1>(¬_¬ )<br>&nbsp;</h1>
 
-        <div class="task-input">
-            <input type="text" id="taskInput" placeholder="Enter a task">
-            <select id="priorityInput">
-                <option value="low">Low</option>
-                <option value="medium" selected>Medium</option>
-                <option value="high">High</option>
-            </select>
-            <input type="datetime-local" id="dueDateInput">
-            <button id="addTask"><i class="fas fa-plus"></i> Add Task</button>
-        </div>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter a task">
+      <input type="datetime-local" id="dueDateInput">
 
-        <div class="task-filters">
-            <button class="filter active" data-filter="all">All</button>
-            <button class="filter" data-filter="pending">Pending</button>
-            <button class="filter" data-filter="completed">Completed</button>
-        </div>
+      <h4>How is your priority?
+        <select id="priorityInput">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </h4>
 
-        <ul id="taskList"></ul>
-
-        <h1>&nbsp</h1>
-        <div class="backup-controls">
-            <button id="backupTasks"><i class="fas fa-download"></i> Backup Tasks</button>
-            <button id="restoreTasks"><i class="fas fa-upload"></i> Restore Tasks</button>
-        </div>
+      <button id="addTask"><i class="fas fa-plus"></i> Add Task</button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- 🌟 Pro Feature -->
+    <div class="pro-feature">
+      <label for="notificationsToggle">
+        <input type="checkbox" id="notificationsToggle">
+        Enable Notifications
+      </label>
+      <span class="pro-label">🔔 Pro Feature</span>
+    </div>
+
+    <div class="task-filters">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="pending">Pending</button>
+      <button class="filter" data-filter="completed">Completed</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <h1>&nbsp;</h1>
+    <div class="backup-controls">
+      <button id="backupTasks"><i class="fas fa-download"></i> Backup Tasks</button>
+      <button id="restoreTasks"><i class="fas fa-upload"></i> Restore Tasks</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

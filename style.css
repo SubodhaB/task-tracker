@@ -109,3 +109,26 @@ body {
 .backup-controls button:hover {
   background: #ddd;
 }
+
+.pro-feature {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.pro-feature input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.pro-label {
+  background-color: gold;
+  color: black;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 12px;
+}
