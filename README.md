@@ -2,6 +2,7 @@
 
 A minimalist, browser-based Task Tracker built with pure HTML, CSS, and JavaScript — no backend, no databases, just blazing fast performance and simplicity. Perfect for managing daily to-dos, with features like priority levels, due dates, task filters, local backup/restore, notifications, and PDF reports.
 
+
 ![Task Tracker Screenshot](./UI.png) <!-- Optional: Replace with actual screenshot file -->
 
 ---
