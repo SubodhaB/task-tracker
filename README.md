@@ -2,7 +2,7 @@
 
 A minimalist, browser-based Task Tracker built with pure HTML, CSS, and JavaScript — no backend, no databases, just blazing fast performance and simplicity. Perfect for managing daily to-dos, with features like priority levels, due dates, task filters, local backup/restore, notifications, and PDF reports.
 
-![Task Tracker Screenshot](./screenshot.png) <!-- Optional: Replace with actual screenshot file -->
+![Task Tracker Screenshot](./UI.png) <!-- Optional: Replace with actual screenshot file -->
 
 ---
 
@@ -32,6 +32,11 @@ A minimalist, browser-based Task Tracker built with pure HTML, CSS, and JavaScri
 
 ---
 
+## 📦 Installation
+1. Clone the repository:  
+   ```sh
+   git clone https://github.com/SubodhaB/task-tracker.git
+
 ## 📂 Project Structure
 
 ```bash
@@ -44,7 +49,3 @@ A minimalist, browser-based Task Tracker built with pure HTML, CSS, and JavaScri
 └── README.md
 
 
-## 📦 Installation
-1. Clone the repository:  
-   ```sh
-   git clone https://github.com/SubodhaB/task-tracker.git
