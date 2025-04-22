@@ -32,8 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.className = "task-item " + (task.completed ? "completed" : "pending");
 
+      const priorityLabel = task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
+      const dueDateLabel = task.dueDate ? new Date(task.dueDate).toLocaleString() : "No due date";
+
       li.innerHTML = `
-        <span>${task.text}</span>
+        <div class="task-info">
+          <span>${task.text}</span>
+          <small>🗓️ ${dueDateLabel} | 🚦 Priority: ${priorityLabel}</small>
+        </div>
         <div class="task-buttons">
           <button class="done" title="Mark Done"><i class="fas fa-check"></i></button>
           <button class="delete" title="Delete Task"><i class="fas fa-times"></i></button>
@@ -64,18 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const newTask = {
-      text,
-      priority,
-      dueDate,
-      completed: false
-    };
-
+    const newTask = { text, priority, dueDate, completed: false };
     tasks.push(newTask);
-
     taskInput.value = "";
     dueDateInput.value = "";
-
     saveTasks();
 
     if (notificationsToggle.checked) {
@@ -125,36 +123,46 @@ document.addEventListener("DOMContentLoaded", () => {
     input.click();
   });
 
-  // Generate PDF Report
   pdfBtn?.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     const date = new Date().toLocaleString();
-
-    doc.setFontSize(18);
-    doc.text("📋 Task Tracker Report", 10, 15);
-
-    doc.setFontSize(12);
-    doc.text(`Generated on: ${date}`, 10, 25);
-
+  
+    doc.setFont("helvetica");
+    doc.setFontSize(16);
+    doc.text("📋 Task Tracker Report", 15, 20);
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${date}`, 15, 27);
+  
     let y = 35;
+  
     tasks.forEach((task, i) => {
-      const status = task.completed ? "✅ Completed" : "⏳ Pending";
-      const due = task.dueDate ? new Date(task.dueDate).toLocaleString() : "No due date";
-      doc.text(`${i + 1}. ${task.text}`, 10, y);
-      doc.text(`   • Priority: ${task.priority} | Due: ${due} | Status: ${status}`, 10, y + 6);
-      y += 15;
-
+      const title = `${i + 1}. ${task.text}`;
+      const priority = `Priority: ${task.priority}`;
+      const due = `Due: ${task.dueDate ? new Date(task.dueDate).toLocaleString() : "No due date"}`;
+      const status = `Status: ${task.completed ? "✅ Completed" : "⏳ Pending"}`;
+  
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+  
+      const wrappedText = doc.splitTextToSize(title, 180);
+      doc.text(wrappedText, 15, y);
+      y += wrappedText.length * 6;
+  
+      doc.setFontSize(10);
+      doc.text(`${priority}   |   ${due}   |   ${status}`, 15, y);
+      y += 12;
+  
       if (y > 280) {
         doc.addPage();
         y = 20;
       }
     });
-
+  
     doc.save("Task_Tracker_Report.pdf");
   });
+  
 
-  // Restore notification toggle state
   const storedToggle = localStorage.getItem("notificationsEnabled");
   if (storedToggle === "true") notificationsToggle.checked = true;
 
@@ -162,19 +170,17 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("notificationsEnabled", notificationsToggle.checked);
   });
 
-  // Load saved tasks on start
   loadTasks();
   scheduleAllNotifications();
 });
 
-// === Notifications Feature ===
+// === Notifications ===
 if ("Notification" in window && Notification.permission !== "granted") {
   Notification.requestPermission();
 }
 
 function scheduleNotifications(task) {
   if (!task.dueDate) return;
-
   const dueTime = new Date(task.dueDate).getTime();
   const currentTime = new Date().getTime();
   const notifyTime = dueTime - 5 * 60 * 1000;
@@ -196,7 +202,6 @@ function scheduleAllNotifications() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   const notificationsToggle = document.getElementById("notificationsToggle");
   if (!notificationsToggle?.checked) return;
-
   tasks.forEach(task => {
     if (!task.completed) scheduleNotifications(task);
   });
