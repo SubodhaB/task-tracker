@@ -70,6 +70,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.task-info {
+  text-align: left;
+}
+
+.task-info small {
+  display: block;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 4px;
 }
 
 .task-buttons button {

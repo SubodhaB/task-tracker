@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Task Tracker</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <div class="task-tracker">
     <h1><i class="fas fa-tasks"></i> Task Tracker</h1>
     <h4>Analyze Your Day</h4>
-    <h1>(¬_¬ )<br>&nbsp;</h1>
+    <h1>(¬_¬ )</h1>
 
     <div class="task-input">
       <input type="text" id="taskInput" placeholder="Enter a task">
       <input type="datetime-local" id="dueDateInput">
-
       <h4>How is your priority?
         <select id="priorityInput">
           <option value="low">Low</option>
@@ -24,11 +23,9 @@
           <option value="high">High</option>
         </select>
       </h4>
-
       <button id="addTask"><i class="fas fa-plus"></i> Add Task</button>
     </div>
 
-    <!-- 🌟 Pro Feature -->
     <div class="pro-feature">
       <label for="notificationsToggle">
         <input type="checkbox" id="notificationsToggle">
@@ -48,7 +45,7 @@
     <h3>&nbsp;</h3>
 
     <div class="pdf-controls">
-        <button id="generatePDF"><i class="fas fa-file-pdf"></i> Generate PDF Report</button>
+      <button id="generatePDF"><i class="fas fa-file-pdf"></i> Generate PDF Report</button>
     </div>
 
     <div class="backup-controls">
@@ -57,7 +54,6 @@
     </div>
   </div>
 
-  <!-- jsPDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
