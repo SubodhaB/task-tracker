@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const pdfBtn = document.getElementById("generatePDF");
 
   let tasks = [];
+  window.tasks = tasks;
+  window.renderTasks = renderTasks;
+
 
   function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -69,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please enter a task.");
       return;
     }
-
+    
     const newTask = { text, priority, dueDate, completed: false };
     tasks.push(newTask);
     taskInput.value = "";
